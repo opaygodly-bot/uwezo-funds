@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" aria-labelledby="title" role="img">
+  <title>Uwezo Funds</title>
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0ea5a4" />
+      <stop offset="100%" stop-color="#0369a1" />
+    </linearGradient>
+    <linearGradient id="g2" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f6d365" />
+      <stop offset="100%" stop-color="#fda085" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="240" fill="url(#g1)" />
+
+  <!-- Stylized U shape (white) -->
+  <path d="M176 150c0 45 0 120 80 160 80-40 80-115 80-160" fill="none" stroke="#fff" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Upward growth arrow (gold) -->
+  <path d="M180 320 L240 260 L290 310 L340 220" fill="none" stroke="url(#g2)" stroke-width="26" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="340,220 330,252 362,240" fill="url(#g2)" />
+
+  <!-- subtle inner circle glow -->
+  <circle cx="256" cy="256" r="192" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="48" />
+</svg>

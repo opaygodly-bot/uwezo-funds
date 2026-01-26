@@ -1,0 +1,166 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fanaka Loans Design System - Kenyan-inspired fintech colors
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Uwezo Funds — refreshed dark theme palette */
+    --background: 210 22% 8%; /* deep navy */
+    --foreground: 210 12% 96%; /* almost white */
+
+    --card: 210 18% 12%;
+    --card-foreground: 210 12% 96%;
+
+    --popover: 210 18% 12%;
+    --popover-foreground: 210 12% 96%;
+
+    /* Teal primary for modern fintech look */
+    --primary: 180 70% 40%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 180 70% 52%;
+    --primary-dark: 180 70% 30%;
+
+    /* Deep indigo secondary */
+    --secondary: 230 30% 14%;
+    --secondary-foreground: 210 12% 96%;
+
+    /* Gold accent */
+    --gold: 45 95% 52%;
+    --gold-light: 45 95% 62%;
+
+    /* Success Green */
+    --success: 142 60% 38%;
+    --success-foreground: 0 0% 100%;
+
+    /* M-Pesa Green: keep available */
+    --mpesa-green: 145 100% 37%;
+    --mpesa-green-foreground: 0 0% 100%;
+
+    /* Warning */
+    --warning: 28 95% 55%;
+    --warning-foreground: 210 12% 96%;
+
+    /* Error/Rejected Red */
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 98%;
+
+    /* Neutral Grays */
+    --muted: 215 12% 30%;
+    --muted-foreground: 210 12% 76%;
+    --accent: 210 18% 14%;
+    --accent-foreground: 210 12% 96%;
+
+    --border: 215 12% 22%;
+    --input: 215 12% 18%;
+    --ring: 180 70% 48%;
+
+    --radius: 0.9rem;
+
+    /* New design tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-light)));
+    --gradient-hero: linear-gradient(180deg, hsl(210 20% 6%), hsl(210 22% 10%));
+    --gradient-gold: linear-gradient(135deg, hsl(var(--gold)), hsl(var(--gold-light)));
+    --gradient-success: linear-gradient(135deg, hsl(var(--success)), hsl(var(--primary-light)));
+    --gradient-warning: linear-gradient(135deg, hsl(var(--warning)), hsl(var(--gold)));
+    --shadow-soft: 0 8px 30px hsl(210 22% 8% / 0.6);
+    --shadow-glow: 0 0 60px hsl(var(--primary) / 0.35);
+    --shadow-card: 0 6px 24px hsl(210 10% 6% / 0.6);
+    --transition-smooth: all 0.32s cubic-bezier(0.2, 0, 0.1, 1);
+
+    --sidebar-background: 210 18% 10%;
+    --sidebar-foreground: 210 12% 96%;
+    --sidebar-primary: 180 70% 40%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 45 95% 52%;
+    --sidebar-accent-foreground: 210 12% 96%;
+    --sidebar-border: 210 12% 16%;
+    --sidebar-ring: 180 70% 48%;
+  }
+
+  .dark {
+    /* Stronger contrast dark mode tweaks */
+    --background: 210 20% 6%;
+    --foreground: 210 12% 96%;
+
+    --card: 210 16% 10%;
+    --card-foreground: 210 12% 96%;
+
+    --popover: 210 16% 10%;
+    --popover-foreground: 210 12% 96%;
+
+    --primary: 180 70% 40%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 230 28% 12%;
+    --secondary-foreground: 210 12% 96%;
+
+    --muted: 215 12% 26%;
+    --muted-foreground: 210 12% 72%;
+
+    --accent: 210 16% 12%;
+    --accent-foreground: 210 12% 96%;
+
+    --destructive: 0 62.8% 40%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 210 12% 14%;
+    --input: 210 16% 10%;
+    --ring: 180 70% 48%;
+    --sidebar-background: 210 16% 10%;
+    --sidebar-foreground: 210 12% 96%;
+    --sidebar-primary: 180 70% 40%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 45 95% 52%;
+    --sidebar-accent-foreground: 210 12% 96%;
+    --sidebar-border: 210 12% 14%;
+    --sidebar-ring: 180 70% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Mobile-first Typography */
+  html {
+    font-size: 14px; /* Base font size for mobile */
+  }
+
+  @media (min-width: 640px) {
+    html {
+      font-size: 16px; /* Standard size for tablets and up */
+    }
+  }
+
+  /* Heading sizes optimized for mobile */
+  h1 {
+    @apply text-xl sm:text-2xl font-bold;
+  }
+
+  h2 {
+    @apply text-lg sm:text-xl font-bold;
+  }
+
+  h3 {
+    @apply text-base sm:text-lg font-semibold;
+  }
+
+  /* Button text optimization */
+  button {
+    @apply text-sm sm:text-base;
+  }
+
+  /* Card text optimization */
+  .card-title {
+    @apply text-base sm:text-lg;
+  }
+}
