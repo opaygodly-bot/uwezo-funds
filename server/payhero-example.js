@@ -228,6 +228,106 @@ app.post('/api/payment-callback', (req, res) => {
   }
 });
 
+// In-memory store for manual Till payments (Lipa na Till)
+const manualPayments = [];
+
+// Record a manual payment submitted by user after paying to the Till
+app.post('/api/payments/manual', (req, res) => {
+  try {
+  const { loanId, amount, till, business, txnCode, phone, note, pastedMessage } = req.body;
+  if (!till) return res.status(400).json({ error: 'Missing till number' });
+
+    const id = `manual_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+    const record = {
+      id,
+      loanId: loanId || null,
+      amount: amount || null,
+      till,
+      business: business || null,
+      txnCode,
+      phone: phone || null,
+      note: note || null,
+      pastedMessage: pastedMessage || null,
+      status: 'pending', // pending | verified | rejected
+      createdAt: new Date().toISOString(),
+    };
+
+    // Attempt basic auto-verification: check pastedMessage for business name and today's date
+    try {
+      const bizUpper = (business || '').toUpperCase();
+      const pasted = (pastedMessage || '').toUpperCase();
+      if (pasted) {
+        const now = new Date();
+        const d = now.getDate();
+        const m = now.getMonth() + 1;
+        const yy = String(now.getFullYear() % 100);
+        const dStr = String(d);
+        const mStr = String(m);
+        const dayPattern = `(?:${dStr}|0${dStr})`;
+        const monPattern = `(?:${mStr}|0${mStr})`;
+        const dateRegex = new RegExp(`\\b${dayPattern}\\/${monPattern}\\/${yy}\\b`);
+
+        if (pasted.includes(bizUpper) && dateRegex.test(pasted)) {
+          record.status = 'verified';
+          record.verifiedAt = new Date().toISOString();
+        }
+      }
+    } catch (err) {
+      console.warn('[manual-payments] Auto-verify check failed', err);
+    }
+
+    manualPayments.push(record);
+    console.log('[manual-payments] Recorded manual payment:', record);
+
+    return res.status(201).json({ success: true, payment: record });
+  } catch (error) {
+    console.error('[manual-payments] Error recording payment:', error);
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Get manual payment by id or by txnCode query
+app.get('/api/payments/manual', (req, res) => {
+  try {
+    const { id, txnCode } = req.query;
+    if (id) {
+      const p = manualPayments.find((x) => x.id === id);
+      if (!p) return res.status(404).json({ error: 'Not found' });
+      return res.json({ payment: p });
+    }
+    if (txnCode) {
+      const p = manualPayments.find((x) => x.txnCode === txnCode);
+      if (!p) return res.status(404).json({ error: 'Not found' });
+      return res.json({ payment: p });
+    }
+    // return recent entries by default
+    return res.json({ payments: manualPayments.slice().reverse().slice(0, 50) });
+  } catch (error) {
+    console.error('[manual-payments] Error fetching payments:', error);
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+// Admin: verify or reject a manual payment
+app.post('/api/payments/manual/:id/verify', (req, res) => {
+  try {
+    const { id } = req.params;
+    const { verified, adminNote } = req.body;
+    const p = manualPayments.find((x) => x.id === id);
+    if (!p) return res.status(404).json({ error: 'Not found' });
+
+    p.status = verified ? 'verified' : 'rejected';
+    p.verifiedAt = new Date().toISOString();
+    p.adminNote = adminNote || null;
+
+    console.log('[manual-payments] Payment verification updated:', p);
+    return res.json({ success: true, payment: p });
+  } catch (error) {
+    console.error('[manual-payments] Error verifying payment:', error);
+    return res.status(500).json({ error: error.message });
+  }
+});
+
 const PORT = process.env.PORT || 4100;
 app.listen(PORT, () => {
   console.log(`[payhero] Server running on port ${PORT}`);
