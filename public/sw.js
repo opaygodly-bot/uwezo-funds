@@ -1,6 +1,6 @@
-/* Service Worker for Fanaka Loans PWA
-   - Handles push events (server push) and periodic sync reminder fallback
-   - Shows a notification reminding users to complete collateral payment
+/* Service Worker for Uwezo Funds PWA
+  - Handles push events (server push) and periodic sync reminder fallback
+  - Shows a notification reminding users to complete collateral payment
 */
 
 self.addEventListener('install', (event) => {
@@ -13,11 +13,11 @@ self.addEventListener('activate', (event) => {
 
 async function showCollateralReminder(data = {}) {
   const title = data.title || 'Finish your collateral payment';
-  const body = data.body || 'You installed Fanaka Loans — complete your collateral payment to unlock your loan.';
+  const body = data.body || 'You installed Uwezo Funds — complete your collateral payment to unlock your loan.';
   const options = Object.assign({
     body,
-    icon: '/logo-192.png',
-    badge: '/logo-192.png',
+    icon: '/logo.svg',
+    badge: '/logo.svg',
     tag: 'collateral-reminder',
     data: data,
   }, data.options || {});

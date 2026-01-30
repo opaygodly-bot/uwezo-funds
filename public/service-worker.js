@@ -1,5 +1,6 @@
 // Minimal service worker for PWA installation requirements
-const CACHE_NAME = 'uwezo-pwa-v1';
+// Bump CACHE_NAME when assets change to force clients to refresh cached icons
+const CACHE_NAME = 'uwezo-pwa-v2';
 const PRECACHE_URLS = [
 	'/',
 	'/index.html',

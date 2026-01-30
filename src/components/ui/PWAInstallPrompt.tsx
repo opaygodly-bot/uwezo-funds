@@ -220,7 +220,7 @@ export const PWAInstallPrompt: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-3 text-white/90 text-sm">
                   <div className="w-1.5 h-1.5 rounded-full bg-white/70 flex-shrink-0" />
-                  <span>Loans up to KES 50,000</span>
+                  <span>Loans up to KES 70,000</span>
                 </div>
                 <div className="flex items-center gap-3 text-white/90 text-sm">
                   <div className="w-1.5 h-1.5 rounded-full bg-white/70 flex-shrink-0" />

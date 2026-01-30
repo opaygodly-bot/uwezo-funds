@@ -80,8 +80,8 @@ export default function useNotificationReminder(opts?: ReminderOptions) {
             if (reg && reg.showNotification) {
               reg.showNotification('Your Loan Application Pending', {
                 body: 'Tap to finish your application unlock your loan.',
-                icon: '/logo-192.png',
-                badge: '/logo-192.png',
+                icon: '/logo.svg',
+                badge: '/logo.svg',
                 tag: 'collateral-reminder',
                 data: { url: '/' },
               } as any);
@@ -89,7 +89,7 @@ export default function useNotificationReminder(opts?: ReminderOptions) {
               // fallback to Notification
               new Notification('Your Loan Application Pending', {
                 body: 'Open the app to finish your application and unlock your loan.',
-                icon: '/logo-192.png',
+                icon: '/logo.svg',
                 tag: 'collateral-reminder',
               });
             }
@@ -113,10 +113,10 @@ export default function useNotificationReminder(opts?: ReminderOptions) {
           timerRef.current = window.setInterval(() => {
             if (isCollateralPaid() || isDismissed()) return;
             try {
-            if (reg && reg.showNotification) {
+                if (reg && reg.showNotification) {
               reg.showNotification('Reminder: Complete Application', {
                 body: 'You still have an incomplete loan application — tap to finish.',
-                icon: '/logo-192.png',
+                icon: '/logo.svg',
                 tag: 'collateral-reminder',
                 data: { url: '/' },
               } as any);
