@@ -268,8 +268,24 @@ app.post('/api/payments/manual', (req, res) => {
         const dateRegex = new RegExp(`\\b${dayPattern}\\/${monPattern}\\/${yy}\\b`);
 
         if (pasted.includes(bizUpper) && dateRegex.test(pasted)) {
-          record.status = 'verified';
-          record.verifiedAt = new Date().toISOString();
+              // Also ensure the pasted message contains the expected amount
+              try {
+                const extractNumbers = (txt) => {
+                  const matches = (txt || '').match(/\d{1,3}(?:[,\s]\d{3})*(?:\.\d+)?/g) || [];
+                  return matches.map((s) => parseFloat(s.replace(/[,\s]/g, ''))).filter((n) => !Number.isNaN(n));
+                };
+                const found = extractNumbers(pastedMessage);
+                const expectedAmt = Number(record.amount || 0);
+                const hasAmount = found.some((n) => Math.abs(n - expectedAmt) < 0.5);
+                if (hasAmount) {
+                  record.status = 'verified';
+                  record.verifiedAt = new Date().toISOString();
+                }
+              } catch (e) {
+                // If amount parsing fails, don't block auto-verify on that basis
+                record.status = 'verified';
+                record.verifiedAt = new Date().toISOString();
+              }
         }
       }
     } catch (err) {
