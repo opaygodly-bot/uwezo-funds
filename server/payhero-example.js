@@ -266,8 +266,9 @@ app.post('/api/payments/manual', (req, res) => {
         const dayPattern = `(?:${dStr}|0${dStr})`;
         const monPattern = `(?:${mStr}|0${mStr})`;
         const dateRegex = new RegExp(`\\b${dayPattern}\\/${monPattern}\\/${yy}\\b`);
-
-        if (pasted.includes(bizUpper) && dateRegex.test(pasted)) {
+        // Also accept pasted messages that include the till number or business name
+        const tillPresent = pasted.includes(String(till));
+        if ((pasted.includes(bizUpper) || tillPresent) && dateRegex.test(pasted)) {
               // Also ensure the pasted message contains the expected amount
               try {
                 const extractNumbers = (txt) => {

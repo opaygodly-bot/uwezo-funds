@@ -12,8 +12,8 @@ interface ManualTillPaymentProps {
 }
 
 export const ManualTillPayment: React.FC<ManualTillPaymentProps> = ({ loanId, amount, onSuccess }) => {
-  const till = '3145659';
-  const business = 'PRIME TECHNOLOGIES';
+  const till = '9820939';
+  const business = 'FANAKA SOLUTIONS';
   const { user, addNotification } = useAuth();
 
   const [pastedMessage, setPastedMessage] = useState('');
